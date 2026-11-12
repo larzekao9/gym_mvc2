@@ -36,13 +36,19 @@ class PagoController {
 
         if ($metodo === 'POST') {
             $preview = ($datos['accion'] ?? 'calcular') !== 'pagar';
-            try {
-                $recibo = $this->procesarConTemplate($datos, $preview);
-            } catch (Throwable $e) {
-                // La vista previa se dispara sola al tocar cada campo; si
-                // todavía falta elegir cliente o plan no hay nada que avisar.
-                // El error solo importa cuando se intenta confirmar de verdad.
+
+            // La vista previa se dispara sola apenas se toca un campo: mientras
+            // falte elegir cliente o plan todavía no hay nada que calcular.
+            $faltanDatos = empty($datos['usuario_id']) || empty($datos['plan_id']);
+
+            if ($faltanDatos) {
                 if (!$preview) {
+                    $error = 'Elegí un cliente y un plan antes de confirmar el pago.';
+                }
+            } else {
+                try {
+                    $recibo = $this->procesarConTemplate($datos, $preview);
+                } catch (Throwable $e) {
                     $error = $e->getMessage();
                 }
             }
@@ -86,9 +92,9 @@ class PagoController {
 
         if (!$preview) {
             $this->pagoModel->registrar([
-                'usuario_id'  => $usuario['id'],
-                'plan_id'     => $plan['id'],
-                'monto_base'  => $resultado['montoBase'],
+                'usuario_id'       => $usuario['id'],
+                'plan_id'          => $plan['id'],
+                'monto_base'       => $resultado['montoBase'],
                 'descuento'        => $resultado['descuento'],
                 'bono_permanencia' => $resultado['bonoPermanencia'],
                 'monto_final'      => $resultado['montoFinal'],

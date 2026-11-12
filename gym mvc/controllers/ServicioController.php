@@ -38,13 +38,19 @@ class ServicioController {
 
         if ($metodo === 'POST') {
             $preview = ($datos['accion'] ?? 'calcular') !== 'contratar';
-            try {
-                $recibo = $this->procesarConEstrategia($datos, $preview);
-            } catch (Throwable $e) {
-                // La vista previa se dispara sola al tocar cada campo; si
-                // todavía falta elegir cliente o servicio no hay nada que
-                // avisar. El error solo importa al confirmar de verdad.
+
+            // La vista previa se dispara sola apenas se toca un campo: mientras
+            // falte elegir cliente o servicio todavía no hay nada que calcular.
+            $faltanDatos = empty($datos['usuario_id']) || empty($datos['servicio_id']);
+
+            if ($faltanDatos) {
                 if (!$preview) {
+                    $error = 'Elegí un cliente y un servicio antes de contratar.';
+                }
+            } else {
+                try {
+                    $recibo = $this->procesarConEstrategia($datos, $preview);
+                } catch (Throwable $e) {
                     $error = $e->getMessage();
                 }
             }

@@ -9,14 +9,14 @@ class PagoAnual extends PagoTemplate {
 
     public function generarRecibo(): array {
         return [
-            'tipo'       => 'Anual',
-            'usuario'    => $this->usuario['nombre'],
-            'plan'       => $this->plan['nombre'],
-            'montoBase'  => $this->montoBase,
-            'descuento'  => $this->descuento,
-            'montoFinal' => $this->montoFinal,
-            'beneficio'  => $this->beneficio,
-            'nota'       => '15% de descuento por pago anual.',
+            'tipo'            => 'Anual',
+            'usuario'         => $this->usuario['nombre'],
+            'plan'            => $this->plan['nombre'],
+            'montoBase'       => $this->montoBase,
+            'descuento'       => $this->descuento,
+            'montoFinal'      => $this->montoFinal,
+            'bonoPermanencia' => $this->bonoPermanencia,
+            'nota'            => '15% de descuento por pago anual.',
         ];
     }
 }

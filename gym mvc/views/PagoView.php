@@ -76,7 +76,7 @@ class PagoView
           <tr><td class="px-3 py-2 text-slate-500">Plan</td><td class="px-3 py-2">' . esc($recibo['plan']) . '</td></tr>
           <tr><td class="px-3 py-2 text-slate-500">Monto base</td><td class="px-3 py-2">Bs ' . number_format($recibo['montoBase'], 2) . '</td></tr>
           <tr><td class="px-3 py-2 text-slate-500">Descuento</td><td class="px-3 py-2 text-emerald-600 font-medium">- Bs ' . number_format($recibo['descuento'], 2) . '</td></tr>
-          ' . ($recibo['beneficio'] !== '' ? '<tr><td class="px-3 py-2 text-slate-500">Beneficio</td><td class="px-3 py-2 text-indigo-700">' . esc($recibo['beneficio']) . '</td></tr>' : '') . '
+          ' . ($recibo['bonoPermanencia'] > 0 ? '<tr><td class="px-3 py-2 text-slate-500">Bono permanencia</td><td class="px-3 py-2 text-emerald-600 font-medium">- Bs ' . number_format($recibo['bonoPermanencia'], 2) . '</td></tr>' : '') . '
           <tr><td class="px-3 py-2 text-slate-500 font-medium">Total</td><td class="px-3 py-2 text-indigo-700 font-bold">Bs ' . number_format($recibo['montoFinal'], 2) . '</td></tr>
         </table>
         <p class="text-sm text-indigo-800 italic mt-2">' . esc($recibo['nota']) . '</p>
@@ -93,11 +93,12 @@ class PagoView
         <td class="px-3 py-2">' . esc($h['plan_nombre']) . '</td>
         <td class="px-3 py-2">Bs ' . number_format((float)$h['monto_base'], 2) . '</td>
         <td class="px-3 py-2 text-emerald-600">- Bs ' . number_format(abs((float)$h['descuento']), 2) . '</td>
+        <td class="px-3 py-2 text-emerald-600">- Bs ' . number_format((float)$h['bono_permanencia'], 2) . '</td>
         <td class="px-3 py-2 font-medium">Bs ' . number_format((float)$h['monto_final'], 2) . '</td>
       </tr>';
         }
         if ($filasHist === '') {
-            $filasHist = '<tr><td colspan="6" class="px-3 py-6 text-center text-slate-400">Sin pagos registrados</td></tr>';
+            $filasHist = '<tr><td colspan="7" class="px-3 py-6 text-center text-slate-400">Sin pagos registrados</td></tr>';
         }
 
         $tablaHistorial = '
@@ -110,6 +111,7 @@ class PagoView
               <th class="px-3 py-2 font-medium">Plan</th>
               <th class="px-3 py-2 font-medium">Base</th>
               <th class="px-3 py-2 font-medium">Descuento</th>
+              <th class="px-3 py-2 font-medium">Bono permanencia</th>
               <th class="px-3 py-2 font-medium">Total</th>
             </tr>
           </thead>

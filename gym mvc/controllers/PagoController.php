@@ -89,8 +89,9 @@ class PagoController {
                 'usuario_id'  => $usuario['id'],
                 'plan_id'     => $plan['id'],
                 'monto_base'  => $resultado['montoBase'],
-                'descuento'   => $resultado['descuento'],
-                'monto_final' => $resultado['montoFinal'],
+                'descuento'        => $resultado['descuento'],
+                'bono_permanencia' => $resultado['bonoPermanencia'],
+                'monto_final'      => $resultado['montoFinal'],
             ]);
         }
 

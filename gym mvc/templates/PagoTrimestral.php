@@ -9,14 +9,14 @@ class PagoTrimestral extends PagoTemplate {
 
     public function generarRecibo(): array {
         return [
-            'tipo'       => 'Trimestral',
-            'usuario'    => $this->usuario['nombre'],
-            'plan'       => $this->plan['nombre'],
-            'montoBase'  => $this->montoBase,
-            'descuento'  => $this->descuento,
-            'montoFinal' => $this->montoFinal,
-            'beneficio'  => $this->beneficio,
-            'nota'       => '5% de descuento por pago trimestral adelantado.',
+            'tipo'            => 'Trimestral',
+            'usuario'         => $this->usuario['nombre'],
+            'plan'            => $this->plan['nombre'],
+            'montoBase'       => $this->montoBase,
+            'descuento'       => $this->descuento,
+            'montoFinal'      => $this->montoFinal,
+            'bonoPermanencia' => $this->bonoPermanencia,
+            'nota'            => '5% de descuento por pago trimestral adelantado.',
         ];
     }
 }

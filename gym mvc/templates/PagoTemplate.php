@@ -3,25 +3,29 @@
 // =====================================================
 // TEMPLATE METHOD - Pago de una membresía
 // El algoritmo tiene 5 pasos y su orden es fijo:
-//   1. validarPagoDuplicado()        -> común
-//   2. calcularMontoBase()           -> común
-//   3. aplicarBeneficioPermanencia() -> común, pero el templateMethod
-//                                       solo lo llama si el plan tiene
-//                                       permanencia > 1 mes
-//   4. calcularDescuento()           -> abstracto (cada plan el suyo)
-//   5. generarRecibo()               -> abstracto (cada plan el suyo)
+//   1. validarPagoDuplicado()   -> común
+//   2. calcularMontoBase()      -> común
+//   3. aplicarBonoPermanencia() -> común, pero el templateMethod solo lo
+//                                  ejecuta si el plan tiene permanencia
+//                                  (más de 1 mes de compromiso)
+//   4. calcularDescuento()      -> abstracto (cada plan el suyo)
+//   5. generarRecibo()          -> abstracto (cada plan el suyo)
 // =====================================================
 abstract class PagoTemplate {
+
+    // Premio fijo por comprometerse más de un mes (igual para todo plan
+    // con permanencia; lo que varía por plan es el descuento del paso 4).
+    const BONO_PERMANENCIA = 20.0;
 
     public array $usuario = [];
     public array $plan    = [];
 
     public bool $yaPagoHoy = false;
 
-    public float  $montoBase  = 0.0;
-    public string $beneficio  = '';
-    public float  $descuento  = 0.0;
-    public float  $montoFinal = 0.0;
+    public float $montoBase       = 0.0;
+    public float $bonoPermanencia = 0.0;
+    public float $descuento       = 0.0;
+    public float $montoFinal      = 0.0;
 
     // ── Template Method — recibe los datos ya cargados por el Controller ──────
     final public function templateMethod(array $usuario, array $plan, bool $yaPagoHoy): array {
@@ -33,13 +37,13 @@ abstract class PagoTemplate {
         $this->calcularMontoBase();
 
         // Solo los planes con permanencia (más de 1 mes) pasan por este paso;
-        // el plan mensual se lo salta.
+        // el plan mensual se lo salta y no recibe el bono.
         if ((int) $this->plan['meses_compromiso'] > 1) {
-            $this->aplicarBeneficioPermanencia();
+            $this->aplicarBonoPermanencia();
         }
 
         $this->descuento  = $this->calcularDescuento();
-        $this->montoFinal = round($this->montoBase - $this->descuento, 2);
+        $this->montoFinal = round($this->montoBase - $this->descuento - $this->bonoPermanencia, 2);
 
         return $this->generarRecibo();
     }
@@ -55,8 +59,8 @@ abstract class PagoTemplate {
         $this->montoBase = round((float) $this->plan['precio_base'], 2);
     }
 
-    protected function aplicarBeneficioPermanencia(): void {
-        $this->beneficio = 'Congelamiento de membresía hasta 15 días';
+    protected function aplicarBonoPermanencia(): void {
+        $this->bonoPermanencia = self::BONO_PERMANENCIA;
     }
 
     // ── Pasos abstractos (obligatorios en subclases) ─────────────────────────

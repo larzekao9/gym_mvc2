@@ -8,6 +8,7 @@ class PagoModel
     public int    $planId;
     public float  $montoBase;
     public float  $descuento;
+    public float  $bonoPermanencia;
     public float  $montoFinal;
     public string $createdAt;
 
@@ -21,8 +22,8 @@ class PagoModel
     public function registrar(array $d): int
     {
         $stmt = $this->conexion->prepare(
-            'INSERT INTO pago (usuario_id, plan_id, monto_base, descuento, monto_final)
-             VALUES (:usuario_id, :plan_id, :monto_base, :descuento, :monto_final)
+            'INSERT INTO pago (usuario_id, plan_id, monto_base, descuento, bono_permanencia, monto_final)
+             VALUES (:usuario_id, :plan_id, :monto_base, :descuento, :bono_permanencia, :monto_final)
              RETURNING id'
         );
         $stmt->execute($d);

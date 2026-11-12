@@ -85,7 +85,7 @@ CREATE TABLE asignacion (
 -- tipo: define qué Template Method (PagoMensual/Trimestral/Anual) calcula
 -- el descuento de ese pago.
 -- meses_compromiso: permanencia del plan; si es mayor a 1 el pago recibe
--- el beneficio de permanencia (paso común del Template Method).
+-- el bono por permanencia (paso que el Template Method solo ejecuta en ese caso).
 CREATE TABLE plan_membresia (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
@@ -101,6 +101,7 @@ CREATE TABLE pago (
     plan_id INT NOT NULL,
     monto_base NUMERIC(8,2) NOT NULL,
     descuento NUMERIC(8,2) NOT NULL,
+    bono_permanencia NUMERIC(8,2) NOT NULL DEFAULT 0,
     monto_final NUMERIC(8,2) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
     CONSTRAINT fk_pago_usuario

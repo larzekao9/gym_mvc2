@@ -1,227 +1,228 @@
+<?xml version="1.0"?>
 <mxfile host="app.diagrams.net">
   <diagram id="strategy" name="Strategy - Servicios Adicionales">
     <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1100" math="0" shadow="0">
       <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
 
         <!-- ===================== VISTA ===================== -->
         <mxCell id="view" value="ServicioView" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#FAD9B5;swimlaneFillColor=#FFFFFF;strokeColor=#0E8088;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="20" y="340" width="280" height="110" as="geometry" />
+          <mxGeometry x="20" y="340" width="280" height="110" as="geometry"/>
         </mxCell>
         <mxCell id="view_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="view">
-          <mxGeometry y="30" width="280" height="12" as="geometry" />
+          <mxGeometry y="30" width="280" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="view_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="view">
-          <mxGeometry y="42" width="280" height="8" as="geometry" />
+          <mxGeometry y="42" width="280" height="8" as="geometry"/>
         </mxCell>
-        <mxCell id="view_m" value="+ render(clientes : array, servicios : array, historial : array, recibo : ?array, opciones : array) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="view">
-          <mxGeometry y="50" width="280" height="60" as="geometry" />
+        <mxCell id="view_m" value="+ render(clientes : array, servicios : array, historial : array, recibo : ?array, opciones : array = []) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="view">
+          <mxGeometry y="50" width="280" height="60" as="geometry"/>
         </mxCell>
 
         <!-- ===================== CONTROLADOR ===================== -->
         <mxCell id="ctrl" value="ServicioController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="360" y="300" width="300" height="236" as="geometry" />
+          <mxGeometry x="360" y="300" width="300" height="256" as="geometry"/>
         </mxCell>
         <mxCell id="ctrl_a" value="+ strategies : array&lt;br&gt;+ usuarioModel : UsuarioModel&lt;br&gt;+ servicioModel : ServicioModel&lt;br&gt;+ contratacionModel : ContratacionServicioModel&lt;br&gt;+ vista : ServicioView" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="ctrl">
-          <mxGeometry y="30" width="300" height="98" as="geometry" />
+          <mxGeometry y="30" width="300" height="98" as="geometry"/>
         </mxCell>
         <mxCell id="ctrl_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="ctrl">
-          <mxGeometry y="128" width="300" height="8" as="geometry" />
+          <mxGeometry y="128" width="300" height="8" as="geometry"/>
         </mxCell>
-        <mxCell id="ctrl_m" value="+ __construct(usuarioModel, servicioModel, contratacionModel, vista)&lt;br&gt;+ handle(metodo : string, datos : array) : void&lt;br&gt;- procesarConEstrategia(datos : array, preview : bool) : array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="ctrl">
-          <mxGeometry y="136" width="300" height="100" as="geometry" />
+        <mxCell id="ctrl_m" value="+ __construct(usuarioModel : UsuarioModel, servicioModel : ServicioModel, contratacionModel : ContratacionServicioModel, vista : ServicioView)&lt;br&gt;+ handle(metodo : string, datos : array) : void&lt;br&gt;- procesarConEstrategia(datos : array, preview : bool) : array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="ctrl">
+          <mxGeometry y="136" width="300" height="120" as="geometry"/>
         </mxCell>
 
         <!-- ===================== CONTEXT ===================== -->
         <mxCell id="ctx" value="ContratacionServicioContext" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="720" y="300" width="300" height="226" as="geometry" />
+          <mxGeometry x="720" y="300" width="300" height="226" as="geometry"/>
         </mxCell>
         <mxCell id="ctx_a" value="- strategy : CategoriaSocioStrategy&lt;br&gt;+ usuario : array&lt;br&gt;+ servicio : array&lt;br&gt;+ precioBase : float&lt;br&gt;+ descuento : float&lt;br&gt;+ precioFinal : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="ctx">
-          <mxGeometry y="30" width="300" height="116" as="geometry" />
+          <mxGeometry y="30" width="300" height="116" as="geometry"/>
         </mxCell>
         <mxCell id="ctx_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="ctx">
-          <mxGeometry y="146" width="300" height="8" as="geometry" />
+          <mxGeometry y="146" width="300" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="ctx_m" value="+ setStrategy(strategy : CategoriaSocioStrategy) : void&lt;br&gt;+ procesarContratacion(usuario : array, servicio : array) : array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="ctx">
-          <mxGeometry y="154" width="300" height="72" as="geometry" />
+          <mxGeometry y="154" width="300" height="72" as="geometry"/>
         </mxCell>
 
         <!-- ===================== INTERFAZ STRATEGY ===================== -->
         <mxCell id="strat" value="&amp;laquo;interface&amp;raquo;&lt;br&gt;&lt;b&gt;CategoriaSocioStrategy&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="720" y="640" width="300" height="92" as="geometry" />
+          <mxGeometry x="720" y="640" width="300" height="92" as="geometry"/>
         </mxCell>
         <mxCell id="strat_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="strat">
-          <mxGeometry y="44" width="300" height="12" as="geometry" />
+          <mxGeometry y="44" width="300" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="strat_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="strat">
-          <mxGeometry y="56" width="300" height="8" as="geometry" />
+          <mxGeometry y="56" width="300" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="strat_m" value="+ calcular(precio : float, servicio : array) : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="strat">
-          <mxGeometry y="64" width="300" height="28" as="geometry" />
+          <mxGeometry y="64" width="300" height="28" as="geometry"/>
         </mxCell>
 
         <!-- ===================== ESTRATEGIAS CONCRETAS ===================== -->
         <mxCell id="s1" value="SocioNormal" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="320" y="860" width="180" height="96" as="geometry" />
+          <mxGeometry x="320" y="860" width="180" height="96" as="geometry"/>
         </mxCell>
         <mxCell id="s1_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s1">
-          <mxGeometry y="30" width="180" height="12" as="geometry" />
+          <mxGeometry y="30" width="180" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="s1_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="s1">
-          <mxGeometry y="42" width="180" height="8" as="geometry" />
+          <mxGeometry y="42" width="180" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="s1_m" value="+ calcular(precio : float, servicio : array) : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s1">
-          <mxGeometry y="50" width="180" height="46" as="geometry" />
+          <mxGeometry y="50" width="180" height="46" as="geometry"/>
         </mxCell>
 
         <mxCell id="s2" value="SocioVIP" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="520" y="860" width="180" height="96" as="geometry" />
+          <mxGeometry x="520" y="860" width="180" height="96" as="geometry"/>
         </mxCell>
         <mxCell id="s2_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s2">
-          <mxGeometry y="30" width="180" height="12" as="geometry" />
+          <mxGeometry y="30" width="180" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="s2_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="s2">
-          <mxGeometry y="42" width="180" height="8" as="geometry" />
+          <mxGeometry y="42" width="180" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="s2_m" value="+ calcular(precio : float, servicio : array) : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s2">
-          <mxGeometry y="50" width="180" height="46" as="geometry" />
+          <mxGeometry y="50" width="180" height="46" as="geometry"/>
         </mxCell>
 
         <mxCell id="s3" value="SocioEstudiante" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="720" y="860" width="180" height="96" as="geometry" />
+          <mxGeometry x="720" y="860" width="180" height="96" as="geometry"/>
         </mxCell>
         <mxCell id="s3_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s3">
-          <mxGeometry y="30" width="180" height="12" as="geometry" />
+          <mxGeometry y="30" width="180" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="s3_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="s3">
-          <mxGeometry y="42" width="180" height="8" as="geometry" />
+          <mxGeometry y="42" width="180" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="s3_m" value="+ calcular(precio : float, servicio : array) : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s3">
-          <mxGeometry y="50" width="180" height="46" as="geometry" />
+          <mxGeometry y="50" width="180" height="46" as="geometry"/>
         </mxCell>
 
         <mxCell id="s4" value="SocioCorporativo" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="920" y="860" width="180" height="96" as="geometry" />
+          <mxGeometry x="920" y="860" width="180" height="96" as="geometry"/>
         </mxCell>
         <mxCell id="s4_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s4">
-          <mxGeometry y="30" width="180" height="12" as="geometry" />
+          <mxGeometry y="30" width="180" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="s4_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="s4">
-          <mxGeometry y="42" width="180" height="8" as="geometry" />
+          <mxGeometry y="42" width="180" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="s4_m" value="+ calcular(precio : float, servicio : array) : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s4">
-          <mxGeometry y="50" width="180" height="46" as="geometry" />
+          <mxGeometry y="50" width="180" height="46" as="geometry"/>
         </mxCell>
 
         <mxCell id="s5" value="SocioPromocion" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="860" width="180" height="96" as="geometry" />
+          <mxGeometry x="1120" y="860" width="180" height="96" as="geometry"/>
         </mxCell>
         <mxCell id="s5_a" value="" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s5">
-          <mxGeometry y="30" width="180" height="12" as="geometry" />
+          <mxGeometry y="30" width="180" height="12" as="geometry"/>
         </mxCell>
         <mxCell id="s5_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="s5">
-          <mxGeometry y="42" width="180" height="8" as="geometry" />
+          <mxGeometry y="42" width="180" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="s5_m" value="+ calcular(precio : float, servicio : array) : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="s5">
-          <mxGeometry y="50" width="180" height="46" as="geometry" />
+          <mxGeometry y="50" width="180" height="46" as="geometry"/>
         </mxCell>
 
         <!-- ===================== MODELOS ===================== -->
         <mxCell id="mServ" value="ServicioModel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#FAD9B5;swimlaneFillColor=#FFFFFF;strokeColor=#0E8088;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1060" y="20" width="240" height="164" as="geometry" />
+          <mxGeometry x="1060" y="20" width="240" height="200" as="geometry"/>
         </mxCell>
-        <mxCell id="mServ_a" value="+ id : int&lt;br&gt;+ nombre : string&lt;br&gt;+ descripcion : string&lt;br&gt;+ precio : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mServ">
-          <mxGeometry y="30" width="240" height="80" as="geometry" />
+        <mxCell id="mServ_a" value="+ id : int&lt;br&gt;+ nombre : string&lt;br&gt;+ descripcion : string&lt;br&gt;+ precio : float&lt;br&gt;- conexion : PDO" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mServ">
+          <mxGeometry y="30" width="240" height="98" as="geometry"/>
         </mxCell>
         <mxCell id="mServ_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="mServ">
-          <mxGeometry y="110" width="240" height="8" as="geometry" />
+          <mxGeometry y="128" width="240" height="8" as="geometry"/>
         </mxCell>
-        <mxCell id="mServ_m" value="+ obtenerTodos() : array&lt;br&gt;+ buscarPorId(id : int) : ?array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mServ">
-          <mxGeometry y="118" width="240" height="46" as="geometry" />
+        <mxCell id="mServ_m" value="+ __construct()&lt;br&gt;+ obtenerTodos() : array&lt;br&gt;+ buscarPorId(id : int) : ?array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mServ">
+          <mxGeometry y="136" width="240" height="64" as="geometry"/>
         </mxCell>
 
         <mxCell id="mCont" value="ContratacionServicioModel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#FAD9B5;swimlaneFillColor=#FFFFFF;strokeColor=#0E8088;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1380" y="200" width="260" height="236" as="geometry" />
+          <mxGeometry x="1380" y="200" width="260" height="272" as="geometry"/>
         </mxCell>
-        <mxCell id="mCont_a" value="+ id : int&lt;br&gt;+ usuarioId : int&lt;br&gt;+ servicioId : int&lt;br&gt;+ categoriaSocio : string&lt;br&gt;+ precioBase : float&lt;br&gt;+ descuento : float&lt;br&gt;+ precioFinal : float&lt;br&gt;+ createdAt : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mCont">
-          <mxGeometry y="30" width="260" height="152" as="geometry" />
+        <mxCell id="mCont_a" value="+ id : int&lt;br&gt;+ usuarioId : int&lt;br&gt;+ servicioId : int&lt;br&gt;+ categoriaSocio : string&lt;br&gt;+ precioBase : float&lt;br&gt;+ descuento : float&lt;br&gt;+ precioFinal : float&lt;br&gt;+ createdAt : string&lt;br&gt;- conexion : PDO" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mCont">
+          <mxGeometry y="30" width="260" height="170" as="geometry"/>
         </mxCell>
         <mxCell id="mCont_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="mCont">
-          <mxGeometry y="182" width="260" height="8" as="geometry" />
+          <mxGeometry y="200" width="260" height="8" as="geometry"/>
         </mxCell>
-        <mxCell id="mCont_m" value="+ registrar(d : array) : int&lt;br&gt;+ obtenerHistorial(limit : int) : array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mCont">
-          <mxGeometry y="190" width="260" height="46" as="geometry" />
+        <mxCell id="mCont_m" value="+ __construct()&lt;br&gt;+ registrar(d : array) : int&lt;br&gt;+ obtenerHistorial(limit : int = 20) : array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mCont">
+          <mxGeometry y="208" width="260" height="64" as="geometry"/>
         </mxCell>
 
         <mxCell id="mUsu" value="UsuarioModel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#FAD9B5;swimlaneFillColor=#FFFFFF;strokeColor=#0E8088;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1090" y="300" width="240" height="280" as="geometry" />
+          <mxGeometry x="1090" y="300" width="240" height="316" as="geometry"/>
         </mxCell>
-        <mxCell id="mUsu_a" value="+ id : int&lt;br&gt;+ nombre : string&lt;br&gt;+ apellido : string&lt;br&gt;+ email : string&lt;br&gt;+ password : string&lt;br&gt;+ rol : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mUsu">
-          <mxGeometry y="30" width="240" height="116" as="geometry" />
+        <mxCell id="mUsu_a" value="+ id : int&lt;br&gt;+ nombre : string&lt;br&gt;+ apellido : string&lt;br&gt;+ email : string&lt;br&gt;+ password : string&lt;br&gt;+ rol : string&lt;br&gt;- conexion : PDO" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mUsu">
+          <mxGeometry y="30" width="240" height="134" as="geometry"/>
         </mxCell>
         <mxCell id="mUsu_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="mUsu">
-          <mxGeometry y="146" width="240" height="8" as="geometry" />
+          <mxGeometry y="164" width="240" height="8" as="geometry"/>
         </mxCell>
-        <mxCell id="mUsu_m" value="+ crear(datos : array) : void&lt;br&gt;+ autenticar(email : string, password : string) : ?array&lt;br&gt;+ obtenerTodos() : array&lt;br&gt;+ obtenerPorId(id : int) : ?array&lt;br&gt;+ actualizar(id : int, datos : array) : void&lt;br&gt;+ eliminar(id : int) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mUsu">
-          <mxGeometry y="154" width="240" height="126" as="geometry" />
+        <mxCell id="mUsu_m" value="+ __construct()&lt;br&gt;+ crear(datos : array) : void&lt;br&gt;+ autenticar(email : string, password : string) : ?array&lt;br&gt;+ obtenerTodos() : array&lt;br&gt;+ obtenerPorId(id : int) : ?array&lt;br&gt;+ actualizar(id : int, datos : array) : void&lt;br&gt;+ eliminar(id : int) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="mUsu">
+          <mxGeometry y="172" width="240" height="144" as="geometry"/>
         </mxCell>
 
         <!-- ===================== CONEXION (DB) ===================== -->
         <mxCell id="db" value="Conexion" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#FAD9B5;swimlaneFillColor=#FFFFFF;strokeColor=#0E8088;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1720" y="180" width="230" height="92" as="geometry" />
+          <mxGeometry x="1720" y="180" width="230" height="92" as="geometry"/>
         </mxCell>
         <mxCell id="db_a" value="- static instancia : ?PDO" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="db">
-          <mxGeometry y="30" width="230" height="27" as="geometry" />
+          <mxGeometry y="30" width="230" height="27" as="geometry"/>
         </mxCell>
         <mxCell id="db_l" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="db">
-          <mxGeometry y="57" width="230" height="8" as="geometry" />
+          <mxGeometry y="57" width="230" height="8" as="geometry"/>
         </mxCell>
         <mxCell id="db_m" value="+ static getConexion() : PDO" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="db">
-          <mxGeometry y="65" width="230" height="27" as="geometry" />
+          <mxGeometry y="65" width="230" height="27" as="geometry"/>
         </mxCell>
 
         <!-- ===================== RELACIONES ===================== -->
         <!-- Vista -> Controlador -->
         <mxCell id="e_view_ctrl" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="view" target="ctrl">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
         <!-- Controlador -> Modelos -->
         <mxCell id="e_ctrl_serv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=0.2;exitY=0;entryX=0;entryY=0.5;" edge="1" parent="1" source="ctrl" target="mServ">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="420" y="102" />
+              <mxPoint x="420" y="102"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e_ctrl_cont" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=0.5;exitY=0;entryX=0;entryY=0.25;" edge="1" parent="1" source="ctrl" target="mCont">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="510" y="259" />
+              <mxPoint x="510" y="259"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e_ctrl_usu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=0.8;exitY=0;entryX=0.5;entryY=0;" edge="1" parent="1" source="ctrl" target="mUsu">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="600" y="280" />
-              <mxPoint x="1210" y="280" />
+              <mxPoint x="600" y="280"/>
+              <mxPoint x="1210" y="280"/>
             </Array>
           </mxGeometry>
         </mxCell>
 
         <!-- Controlador -> Context -->
         <mxCell id="e_ctrl_ctx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="ctrl" target="ctx">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
         <!-- Context <>-> Strategy (agregación) -->
         <mxCell id="e_ctx_strat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;startArrow=diamond;startFill=0;startSize=14;endArrow=open;endSize=10;exitX=1;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="ctx" target="strat">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1060" y="413" />
-              <mxPoint x="1060" y="686" />
+              <mxPoint x="1060" y="413"/>
+              <mxPoint x="1060" y="686"/>
             </Array>
           </mxGeometry>
         </mxCell>
@@ -230,56 +231,56 @@
         <mxCell id="e_s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;dashed=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="s1" target="strat">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="410" y="800" />
-              <mxPoint x="870" y="800" />
+              <mxPoint x="410" y="800"/>
+              <mxPoint x="870" y="800"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e_s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;dashed=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="s2" target="strat">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="610" y="800" />
-              <mxPoint x="870" y="800" />
+              <mxPoint x="610" y="800"/>
+              <mxPoint x="870" y="800"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e_s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;dashed=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="s3" target="strat">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="810" y="800" />
-              <mxPoint x="870" y="800" />
+              <mxPoint x="810" y="800"/>
+              <mxPoint x="870" y="800"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e_s4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;dashed=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="s4" target="strat">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1010" y="800" />
-              <mxPoint x="870" y="800" />
+              <mxPoint x="1010" y="800"/>
+              <mxPoint x="870" y="800"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e_s5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0000FF;strokeWidth=2;dashed=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="s5" target="strat">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1210" y="800" />
-              <mxPoint x="870" y="800" />
+              <mxPoint x="1210" y="800"/>
+              <mxPoint x="870" y="800"/>
             </Array>
           </mxGeometry>
         </mxCell>
 
         <!-- Modelos -> Conexion -->
         <mxCell id="e_serv_db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" edge="1" parent="1" source="mServ" target="db">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="e_cont_db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="mCont" target="db">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="e_usu_db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#B20000;endArrow=open;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="mUsu" target="db">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1210" y="620" />
-              <mxPoint x="1835" y="620" />
+              <mxPoint x="1210" y="650"/>
+              <mxPoint x="1835" y="650"/>
             </Array>
           </mxGeometry>
         </mxCell>

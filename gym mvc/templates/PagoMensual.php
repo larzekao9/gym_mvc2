@@ -9,14 +9,14 @@ class PagoMensual extends PagoTemplate {
 
     public function generarRecibo(): array {
         return [
-            'tipo'       => 'Mensual',
-            'usuario'    => $this->usuario['nombre'],
-            'plan'       => $this->plan['nombre'],
-            'montoBase'  => $this->montoBase,
-            'descuento'  => $this->descuento,
-            'montoFinal' => $this->montoFinal,
-            'beneficio'  => $this->beneficio,
-            'nota'       => 'Plan mes a mes, sin descuentos ni permanencia.',
+            'tipo'            => 'Mensual',
+            'usuario'         => $this->usuario['nombre'],
+            'plan'            => $this->plan['nombre'],
+            'montoBase'       => $this->montoBase,
+            'descuento'       => $this->descuento,
+            'montoFinal'      => $this->montoFinal,
+            'bonoPermanencia' => $this->bonoPermanencia,
+            'nota'            => 'Plan mes a mes, sin descuentos ni permanencia.',
         ];
     }
 }

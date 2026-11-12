@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amenidades Extras</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { font-family: sans-serif; background: #f5f5f5; color: #333; }
+
+        header {
+            background: #1a365d;
+            color: #fff;
+            padding: 1rem 2rem;
+        }
+        header h1 { font-size: 1.3rem; }
+        header p  { font-size: .8rem; opacity: .75; margin-top: .2rem; }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: .5rem;
+            color: #a0b8d8;
+            font-size: .85rem;
+            text-decoration: none;
+        }
+        .nav-link:hover { color: #fff; text-decoration: underline; }
+
+        main {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 1.2rem;
+        }
+
+        section {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 1.2rem;
+        }
+
+        h2 {
+            font-size: .95rem;
+            color: #1a365d;
+            margin-bottom: .9rem;
+            padding-bottom: .4rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Amenidades */
+        #grid-amenidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: .6rem;
+        }
+
+        .amen-card {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: .7rem .6rem;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: .25rem;
+        }
+        .amen-card:hover        { border-color: #2b6cb0; background: #f0f6ff; }
+        .amen-card.seleccionado { border-color: #1a365d; background: #dbe9ff; }
+
+        .amen-nombre { font-size: .88rem; font-weight: 700; }
+        .amen-precio { font-size: .78rem; color: #2b6cb0; }
+        .amen-desc   { font-size: .7rem; color: #666; }
+
+        #detalle-amenidad { margin-top: .6rem; font-size: .82rem; color: #555; min-height: 1rem; }
+
+        /* Formulario */
+        .campo { margin-bottom: .8rem; }
+
+        label {
+            display: block;
+            font-size: .78rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: .25rem;
+        }
+
+        select {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: .4rem .5rem;
+            font-size: .88rem;
+        }
+        select:focus { outline: 2px solid #2b6cb0; }
+
+        /* Estrategias */
+        .estrategia-group { display: flex; flex-direction: column; gap: .35rem; }
+        .estrategia-group label {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            cursor: pointer;
+            font-weight: normal;
+            padding: .3rem .4rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+        .estrategia-group label:hover { background: #f0f6ff; }
+        .estrategia-group input { width: auto; }
+
+        /* Botones */
+        .btn-group { display: flex; gap: .5rem; margin-top: .9rem; }
+        button {
+            flex: 1;
+            padding: .55rem .8rem;
+            border: none;
+            border-radius: 4px;
+            font-size: .88rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        button:hover { opacity: .85; }
+        .btn-preview   { background: #d69e2e; color: #fff; }
+        .btn-confirm   { background: #2b6cb0; color: #fff; }
+        .btn-historial { background: #276749; color: #fff; margin-top: .5rem; width: 100%; }
+
+        /* Recibo */
+        #recibo {
+            margin-top: 1rem;
+            border: 1px solid #bee3f8;
+            border-radius: 4px;
+            padding: .8rem;
+            background: #f7fafc;
+            font-size: .82rem;
+        }
+        #recibo h3 { font-size: .88rem; color: #1a365d; margin-bottom: .6rem; }
+        .recibo-tabla { width: 100%; border-collapse: collapse; }
+        .recibo-tabla th, .recibo-tabla td { padding: .25rem .35rem; text-align: left; }
+        .recibo-tabla th { color: #666; width: 120px; }
+        .cargo     { color: #c53030; font-weight: 600; }
+        .beneficio { color: #276749; font-weight: 600; }
+        .total     { color: #2b6cb0; font-weight: 700; }
+        .nota      { font-size: .76rem; font-style: italic; margin-top: .4rem; }
+        .nota.cargo     { color: #c53030; }
+        .nota.beneficio { color: #276749; }
+        .aviso { color: #c05621; margin-top: .4rem; font-style: italic; font-size: .76rem; }
+
+        .badge {
+            font-size: .68rem; padding: .1rem .4rem;
+            border-radius: 10px; font-weight: 700; vertical-align: middle;
+        }
+        .badge-normal   { background: #e2e8f0; color: #4a5568; }
+        .badge-vip      { background: #fefcbf; color: #744210; border: 1px solid #d69e2e; }
+        .badge-corp     { background: #e9d8fd; color: #553c9a; border: 1px solid #9f7aea; }
+        .badge-alta     { background: #fed7d7; color: #c53030; border: 1px solid #fc8181; }
+        .badge-promo    { background: #c6f6d5; color: #276749; border: 1px solid #48bb78; }
+
+        /* Historial */
+        #seccion-historial { margin-top: 1rem; grid-column: 1 / -1; }
+        .tabla-historial { width: 100%; border-collapse: collapse; font-size: .82rem; }
+        .tabla-historial th { background: #1a365d; color: #fff; padding: .4rem .6rem; text-align: left; }
+        .tabla-historial td { padding: .4rem .6rem; border-bottom: 1px solid #e2e8f0; }
+        .tabla-historial tr:hover td { background: #f0f6ff; }
+
+        .oculto { display: none !important; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Amenidades Extras</h1>
+    <a class="nav-link" href="VistaReservas.html">← Ir a Reservas de Hotel</a>
+</header>
+
+<main>
+
+    <div>
+        <section>
+            <h2>Amenidades disponibles</h2>
+            <div id="grid-amenidades"><p>Cargando...</p></div>
+            <p id="detalle-amenidad"></p>
+        </section>
+
+        <section id="seccion-historial" class="oculto">
+            <h2>Historial de contrataciones</h2>
+            <table class="tabla-historial">
+                <thead>
+                    <tr>
+                        <th>#</th><th>Cliente</th><th>Amenidad</th>
+                        <th>Base</th><th>Cargo/Desc.</th><th>Total</th><th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody id="historial-body">
+                    <tr><td colspan="7">-</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <div>
+        <section>
+            <h2>Contratar amenidad</h2>
+
+            <div class="campo">
+                <label for="clienteId">Cliente</label>
+                <select id="clienteId">
+                    <option value="">Cargando...</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Precio</label>
+                <div class="estrategia-group">
+                    <label><input type="radio" name="estrategia" value="normal" checked> Normal — precio base</label>
+                    <label><input type="radio" name="estrategia" value="vip"> VIP — 15% descuento</label>
+                    <label><input type="radio" name="estrategia" value="corporativo"> Corporativo — 20% descuento</label>
+                    <label><input type="radio" name="estrategia" value="temporada_alta"> Temporada Alta — 25% recargo</label>
+                    <label><input type="radio" name="estrategia" value="promocion"> Promocion — 30% descuento</label>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-preview" id="btnPreview">Vista previa</button>
+                <button class="btn-confirm" id="btnContratar">Contratar</button>
+            </div>
+
+            <button class="btn-historial" id="btnHistorial">Ver historial</button>
+
+            <div id="recibo" class="oculto"></div>
+        </section>
+    </div>
+
+</main>
+
+<script>
+class Vista {
+    constructor() {
+        this.API = 'http://localhost:9000/api/amenidades.php';
+
+        /** @type {string} */
+        this.amenidadActiva = '';
+
+        /** @type {Array<Object>} */
+        this.amenidades = [];
+
+        /** @type {Object} */
+        this.clienteActual = {};
+
+        /** @type {AbortController|null} */
+        this.contratarController = null;
+
+        /** @type {number}  */
+        this.contratarNonce = 0;
+
+        this.estrategiaActiva = 'normal';
+        this.amenidadSeleccionada = null;
+
+        this.init();
+    }
+
+    init() {
+        this.cargarAmenidades();
+        this._cargarClientes();
+        this.bindAmenidades();
+        this.bindContratar();
+    }
+
+    // ── Carga de datos ──────────────────────────────────────────────────────
+    async cargarAmenidades() {
+        const data = await this._fetch({ action: 'listar_amenidades' });
+        this.amenidades = data ?? [];
+        this._renderAmenidades();
+    }
+
+    async _cargarClientes() {
+        const data = await this._fetch({ action: 'listar_clientes' });
+        const select = document.getElementById('clienteId');
+        select.innerHTML = '<option value="">-- Seleccionar cliente --</option>';
+        (data ?? []).forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = `${c.nombre} (${c.correo})`;
+            select.appendChild(opt);
+        });
+    }
+
+    // ── Bind eventos ────────────────────────────────────────────────────────
+    bindAmenidades() {
+        document.getElementById('grid-amenidades').addEventListener('click', e => {
+            const card = e.target.closest('.amen-card');
+            if (!card) return;
+            const id = card.dataset.id;
+            this.amenidadSeleccionada = this.amenidades.find(a => a.id == id);
+            this.amenidadActiva = id;
+
+            document.querySelectorAll('.amen-card').forEach(el => el.classList.remove('seleccionado'));
+            card.classList.add('seleccionado');
+
+            document.getElementById('detalle-amenidad').textContent =
+                `${this.amenidadSeleccionada.nombre} — Bs ${parseFloat(this.amenidadSeleccionada.precio).toFixed(2)}`;
+        });
+
+        document.querySelectorAll('input[name="estrategia"]').forEach(r =>
+            r.addEventListener('change', e => { this.estrategiaActiva = e.target.value; })
+        );
+    }
+
+    bindContratar() {
+        document.getElementById('btnPreview')   .addEventListener('click', () => this.contratar(true));
+        document.getElementById('btnContratar') .addEventListener('click', () => this.contratar(false));
+        document.getElementById('btnHistorial') .addEventListener('click', () => this.renderHistorial());
+    }
+
+    // ── Contratar (preview o definitivo) ────────────────────────────────────
+    async contratar(preview) {
+        if (!this._validarFormulario()) return;
+
+        if (this.contratarController) this.contratarController.abort();
+        this.contratarController = new AbortController();
+
+        const nonce = ++this.contratarNonce;
+
+        const payload = {
+            action:      preview ? 'calcular' : 'contratar',
+            estrategia:  this.estrategiaActiva,
+            clienteId:   document.getElementById('clienteId').value,
+            amenidadId:  this.amenidadSeleccionada.id,
+        };
+
+        const data = await this._fetch(payload, this.contratarController.signal);
+
+        if (data && nonce === this.contratarNonce) {
+            this.renderRecibo(data, preview);
+        }
+    }
+
+    // ── Render recibo ───────────────────────────────────────────────────────
+    renderRecibo(data, esPreview = false) {
+        const badges = {
+            normal:         '<span class="badge badge-normal">Normal</span>',
+            vip:            '<span class="badge badge-vip">VIP</span>',
+            corporativo:    '<span class="badge badge-corp">Corporativo</span>',
+            temporada_alta: '<span class="badge badge-alta">Temporada Alta</span>',
+            promocion:      '<span class="badge badge-promo">Promocion</span>',
+        };
+
+        const badge       = badges[this.estrategiaActiva] ?? '';
+        const cargoHtml   = data.cargoExtra > 0
+            ? `<tr><th>Recargo</th><td class="cargo">+ Bs ${data.cargoExtra.toFixed(2)}</td></tr>` : '';
+        const descuentoHtml = data.cargoExtra < 0
+            ? `<tr><th>Descuento</th><td class="beneficio">- Bs ${Math.abs(data.cargoExtra).toFixed(2)}</td></tr>` : '';
+        const notaHtml    = data.notaCargo
+            ? `<p class="nota cargo">${data.notaCargo}</p>`
+            : data.notaBeneficio
+            ? `<p class="nota beneficio">${data.notaBeneficio}</p>` : '';
+
+        const box = document.getElementById('recibo');
+        box.innerHTML = `
+            <h3>${esPreview ? 'Vista previa' : 'Contratacion confirmada'} ${badge}</h3>
+            <table class="recibo-tabla">
+                <tr><th>Cliente</th>      <td>${data.cliente}</td></tr>
+                <tr><th>Amenidad</th>     <td>${data.amenidad}</td></tr>
+                <tr><th>Descripcion</th>  <td>${data.descripcion}</td></tr>
+                <tr><th>Precio base</th>  <td>Bs ${data.precioBase.toFixed(2)}</td></tr>
+                ${cargoHtml}${descuentoHtml}
+                <tr><th>Total</th>        <td class="total">Bs ${data.precioFinal.toFixed(2)}</td></tr>
+            </table>
+            ${notaHtml}
+            ${esPreview ? '<p class="aviso">Vista previa - presiona Contratar para confirmar.</p>' : ''}
+        `;
+        box.classList.remove('oculto');
+        box.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ── Historial ───────────────────────────────────────────────────────────
+    async renderHistorial(filas = []) {
+        if (!filas.length) {
+            const data = await this._fetch({ action: 'historial' });
+            filas = data ?? [];
+        }
+        const tbody = document.getElementById('historial-body');
+        tbody.innerHTML = filas.length
+            ? filas.map(r => `
+                <tr>
+                    <td>${r.id}</td>
+                    <td>${r.cliente_nombre}</td>
+                    <td>${r.amenidad_nombre}</td>
+                    <td>Bs ${parseFloat(r.precio_base).toFixed(2)}</td>
+                    <td class="${+r.cargo_extra >= 0 ? 'cargo' : 'beneficio'}">
+                        ${+r.cargo_extra >= 0 ? '+' : '-'} Bs ${Math.abs(r.cargo_extra).toFixed(2)}
+                    </td>
+                    <td>Bs ${parseFloat(r.precio_final).toFixed(2)}</td>
+                    <td>${r.created_at?.slice(0, 10) ?? ''}</td>
+                </tr>`).join('')
+            : '<tr><td colspan="7">Sin contrataciones registradas.</td></tr>';
+        document.getElementById('seccion-historial').classList.remove('oculto');
+    }
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    _renderAmenidades() {
+        const grid = document.getElementById('grid-amenidades');
+        grid.innerHTML = this.amenidades.map(a => `
+            <div class="amen-card" data-id="${a.id}">
+                <span class="amen-nombre">${a.nombre}</span>
+                <span class="amen-precio">Bs ${parseFloat(a.precio).toFixed(2)}</span>
+                <span class="amen-desc">${a.descripcion ?? ''}</span>
+            </div>`).join('');
+    }
+
+    _validarFormulario() {
+        if (!this.amenidadSeleccionada) { alert('Selecciona una amenidad.');  return false; }
+        if (!document.getElementById('clienteId').value) { alert('Selecciona un cliente.'); return false; }
+        return true;
+    }
+
+    async _fetch(payload, signal = null) {
+        try {
+            const res  = await fetch(this.API, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify(payload),
+                signal,
+            });
+            const json = await res.json();
+            if (!json.ok) { alert(`Error: ${json.error}`); return null; }
+            return json.data;
+        } catch (e) {
+            if (e.name !== 'AbortError') alert(`Error de red: ${e.message}`);
+            return null;
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => new Vista());
+</script>
+</body>
+</html>

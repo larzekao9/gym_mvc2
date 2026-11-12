@@ -1,0 +1,268 @@
+<?php
+// =====================================================
+// router.php
+// Arma cada MVC (inyecta modelo y vista), define las rutas
+// y se encarga de la plomería HTTP (leer body, subir
+// archivos, redirigir). El controlador sólo tiene el CRUD.
+//
+// Cada recurso vive en UNA sola URL (ej. /usuario): editar y
+// eliminar viajan por querystring, así el path nunca cambia.
+// =====================================================
+
+session_start();
+
+require_once __DIR__ . '/Conexion.php';
+
+require_once __DIR__ . '/models/UsuarioModel.php';
+require_once __DIR__ . '/views/UsuarioView.php';
+require_once __DIR__ . '/controllers/UsuarioController.php';
+
+require_once __DIR__ . '/views/LoginView.php';
+require_once __DIR__ . '/controllers/LoginController.php';
+
+require_once __DIR__ . '/views/EntrenamientoView.php';
+require_once __DIR__ . '/controllers/EntrenamientoController.php';
+
+require_once __DIR__ . '/models/CategoriaModel.php';
+require_once __DIR__ . '/views/CategoriaView.php';
+require_once __DIR__ . '/controllers/CategoriaController.php';
+
+require_once __DIR__ . '/models/EjercicioModel.php';
+require_once __DIR__ . '/views/EjercicioView.php';
+require_once __DIR__ . '/controllers/EjercicioController.php';
+
+require_once __DIR__ . '/models/RutinaModel.php';
+require_once __DIR__ . '/models/RutinaEjercicioModel.php';
+require_once __DIR__ . '/views/RutinaView.php';
+require_once __DIR__ . '/controllers/RutinaController.php';
+
+require_once __DIR__ . '/models/AsignacionModel.php';
+require_once __DIR__ . '/views/AsignacionView.php';
+require_once __DIR__ . '/controllers/AsignacionController.php';
+
+// --- Pago de Membresía (Template Method) ---
+require_once __DIR__ . '/templates/PagoTemplate.php';
+require_once __DIR__ . '/templates/PagoMensual.php';
+require_once __DIR__ . '/templates/PagoTrimestral.php';
+require_once __DIR__ . '/templates/PagoAnual.php';
+require_once __DIR__ . '/models/PlanMembresiaModel.php';
+require_once __DIR__ . '/models/PagoModel.php';
+require_once __DIR__ . '/views/PagoView.php';
+require_once __DIR__ . '/controllers/PagoController.php';
+
+// --- Contratar Servicio Adicional (Strategy) ---
+require_once __DIR__ . '/strategies/CategoriaSocioStrategy.php';
+require_once __DIR__ . '/strategies/SocioNormal.php';
+require_once __DIR__ . '/strategies/SocioVIP.php';
+require_once __DIR__ . '/strategies/SocioEstudiante.php';
+require_once __DIR__ . '/strategies/SocioCorporativo.php';
+require_once __DIR__ . '/strategies/SocioPromocion.php';
+require_once __DIR__ . '/context/ContratacionServicioContext.php';
+require_once __DIR__ . '/models/ServicioModel.php';
+require_once __DIR__ . '/models/ContratacionServicioModel.php';
+require_once __DIR__ . '/views/ServicioView.php';
+require_once __DIR__ . '/controllers/ServicioController.php';
+
+// ---- servir archivos estáticos subidos (imagen/video) ----
+$uploadsDir = __DIR__ . '/uploads';
+if (!is_dir($uploadsDir)) {
+    mkdir($uploadsDir, 0777, true);
+}
+
+$pathname = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$metodo = $_SERVER['REQUEST_METHOD'];
+
+// ---- login / logout (rutas públicas) ----
+$loginC = new LoginController(new UsuarioModel(), new LoginView());
+
+if ($pathname === '/login') {
+    if ($metodo === 'POST') {
+        $loginC->iniciarSesion($_POST);
+    } else {
+        $loginC->mostrarFormulario();
+    }
+    exit;
+}
+
+if ($pathname === '/logout') {
+    $loginC->cerrarSesion();
+    exit;
+}
+
+// ---- a partir de acá, hace falta estar logueado ----
+if (empty($_SESSION['usuario'])) {
+    header('Location: /login');
+    exit;
+}
+
+$rolUsuario = $_SESSION['usuario']['rol'];
+
+// El cliente solo puede ver sus entrenamientos; todo lo demás (incluida
+// la raíz) lo manda para allá. Admin/entrenador van al panel de gestión.
+// Los archivos de /uploads/ quedan afuera de esta regla porque las
+// imágenes/videos de sus rutinas se sirven por ahí.
+if ($rolUsuario === 'cliente' && $pathname !== '/mis-entrenamientos' && strpos($pathname, '/uploads/') !== 0) {
+    header('Location: /mis-entrenamientos');
+    exit;
+}
+
+if ($pathname === '/') {
+    header('Location: ' . ($rolUsuario === 'cliente' ? '/mis-entrenamientos' : '/usuario'));
+    exit;
+}
+
+if ($pathname === '/mis-entrenamientos') {
+    $entrenamientoC = new EntrenamientoController(new AsignacionModel(), new RutinaModel(), new RutinaEjercicioModel(), new EntrenamientoView());
+    $entrenamientoC->misEntrenamientos((int)$_SESSION['usuario']['id']);
+    exit;
+}
+
+if (strpos($pathname, '/uploads/') === 0) {
+    $nombre = basename($pathname); // evita path traversal
+    $ruta = $uploadsDir . '/' . $nombre;
+    if (!is_file($ruta)) {
+        http_response_code(404);
+        echo 'No encontrado';
+        exit;
+    }
+    $tipos = [
+        'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
+        'gif' => 'image/gif', 'webp' => 'image/webp',
+        'mp4' => 'video/mp4', 'webm' => 'video/webm', 'mov' => 'video/quicktime', 'ogg' => 'video/ogg',
+    ];
+    $ext = strtolower(pathinfo($nombre, PATHINFO_EXTENSION));
+    header('Content-Type: ' . ($tipos[$ext] ?? 'application/octet-stream'));
+    readfile($ruta);
+    exit;
+}
+
+// ---- instancias (inyección de modelo y vista) ----
+$categoriaModel = new CategoriaModel();
+$usuarioC = new UsuarioController(new UsuarioModel(), new UsuarioView());
+$categoriaC = new CategoriaController($categoriaModel, new CategoriaView());
+$ejercicioModel = new EjercicioModel();
+$ejercicioC = new EjercicioController($ejercicioModel, new EjercicioView(), $categoriaModel);
+$rutinaC = new RutinaController(
+    new RutinaModel(), $ejercicioModel, new RutinaEjercicioModel(), new RutinaView()
+);
+
+$asignacionC = new AsignacionController(
+    new UsuarioModel(), new RutinaModel(), new AsignacionModel(), new AsignacionView()
+);
+
+$pagoC = new PagoController(new UsuarioModel(), new PlanMembresiaModel(), new PagoModel(), new PagoView());
+
+$servicioC = new ServicioController(new UsuarioModel(), new ServicioModel(), new ContratacionServicioModel(), new ServicioView());
+
+// Un recurso, una URL: GET lista (y precarga el form si ?editar=id),
+// POST crea/actualiza (según venga o no el id) o elimina (?eliminar=id)
+function manejarRecurso(string $recurso, object $controller, string $pathname, string $metodo): bool
+{
+    if ($pathname !== '/' . $recurso) {
+        return false;
+    }
+
+    if ($metodo === 'GET') {
+        $idEditando = isset($_GET['editar']) ? (int)$_GET['editar'] : null;
+        if ($idEditando) {
+            $controller->obtenerPorId($idEditando);
+        } else {
+            $controller->obtenerTodos();
+        }
+        return true;
+    }
+
+    if ($metodo === 'POST') {
+        if (isset($_GET['eliminar'])) {
+            $controller->eliminar((int)$_GET['eliminar']);
+            return true;
+        }
+
+        if (!empty($_POST['id'])) {
+            $controller->actualizar((int)$_POST['id'], $_POST);
+        } else {
+            $controller->crear($_POST);
+        }
+        return true;
+    }
+
+    return false;
+}
+//crear entidades
+
+if (manejarRecurso('usuario', $usuarioC, $pathname, $metodo)) exit;
+if (manejarRecurso('categoria', $categoriaC, $pathname, $metodo)) exit;
+if (manejarRecurso('ejercicio', $ejercicioC, $pathname, $metodo)) exit;
+
+// Rutinas + Asignar Ejercicios en una sola pantalla (maestro/detalle):
+// GET  ?rutina=id  -> selecciona la rutina a editar/ver ejercicios
+// GET  ?nueva=1    -> form en blanco para crear una rutina
+// GET  (sin query) -> selecciona la primera rutina automáticamente
+// POST accion=agregar_ejercicio / eliminar_ejercicio -> detalle
+// POST ?eliminar=id -> borra la rutina (cabecera)
+// POST (resto)      -> crea o actualiza la rutina (según venga id)
+if ($pathname === '/rutina') {
+    if ($metodo === 'GET') {
+        if (isset($_GET['nueva'])) {
+            $rutinaC->nueva();
+        } elseif (isset($_GET['rutina'])) {
+            $rutinaC->obtenerPorId((int)$_GET['rutina']);
+        } else {
+            $rutinaC->obtenerTodos();
+        }
+        exit;
+    }
+    if ($metodo === 'POST') {
+        if (isset($_GET['eliminar'])) {
+            $rutinaC->eliminar((int)$_GET['eliminar']);
+        } elseif (($_POST['accion'] ?? '') === 'agregar_ejercicio') {
+            $rutinaC->agregarEjercicio($_POST);
+        } elseif (($_POST['accion'] ?? '') === 'eliminar_ejercicio') {
+            $rutinaC->eliminarEjercicio((int)$_POST['rutina_id'], (int)$_POST['ejercicio_id']);
+        } elseif (!empty($_POST['id'])) {
+            $rutinaC->actualizar((int)$_POST['id'], $_POST);
+        } else {
+            $rutinaC->crear($_POST);
+        }
+        exit;
+    }
+}
+
+// Pago de Membresía: misma pantalla del panel (Template Method:
+// PagoMensual / PagoTrimestral / PagoAnual elegido según el plan).
+if ($pathname === '/pagos') {
+    $pagoC->handle($metodo, $metodo === 'POST' ? $_POST : []);
+    exit;
+}
+
+// Contratar Servicio Adicional: misma pantalla del panel (Strategy:
+// SocioNormal/VIP/Estudiante/Corporativo/Promocion según la categoría).
+if ($pathname === '/servicios') {
+    $servicioC->handle($metodo, $metodo === 'POST' ? $_POST : []);
+    exit;
+}
+
+// Asignar Rutina a Usuario: GET elige/muestra el usuario (?usuario=id),
+// POST agrega una asignación o la quita (según venga accion=eliminar)
+if ($pathname === '/asignar-rutina') {
+    if ($metodo === 'GET') {
+        $usuarioId = isset($_GET['usuario']) ? (int)$_GET['usuario'] : null;
+        if ($usuarioId) {
+            $asignacionC->obtenerPorId($usuarioId);
+        } else {
+            $asignacionC->obtenerTodos();
+        }
+        exit;
+    }
+    if ($metodo === 'POST') {
+        if (($_POST['accion'] ?? '') === 'eliminar') {
+            $asignacionC->eliminarAsignacion((int)$_POST['usuario_id'], (int)$_POST['rutina_id'], $_POST['fecha_inicio']);
+        } else {
+            $asignacionC->agregarAsignacion($_POST);
+        }
+        exit;
+    }
+}
+
+http_response_code(404);
+echo '<h1>404 - Ruta no encontrada</h1>';

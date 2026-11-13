@@ -1,0 +1,25 @@
+# Base de datos local del gimnasio (PostgreSQL).
+# El puerto del host es 5433 para no chocar con un Postgres local en 5432.
+# db/init.sql se ejecuta solo la primera vez (volumen vacío).
+name: gym   # nombre fijo del proyecto: no depende de la carpeta donde se descomprima
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: gym-db
+    environment:
+      POSTGRES_DB: BaseDatosGym
+      POSTGRES_USER: gym
+      POSTGRES_PASSWORD: gym123
+    ports:
+      - "5433:5432"
+    volumes:
+      - gym_pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gym -d BaseDatosGym"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  gym_pgdata:
